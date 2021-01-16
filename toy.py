@@ -43,7 +43,7 @@ def show_blinkt():
         t = int(t) & 0xFF
         b = 0x01
         # pick a colour
-        colour = colours[l.tm_hour % len(colours)]
+        colour = colours[l.tm_min % len(colours)]
         for i in range(0, 8):
             if t & b > 0:
                 blinkt.set_pixel(7 - i, colour[0], colour[1], colour[2])
