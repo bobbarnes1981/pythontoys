@@ -25,6 +25,7 @@ colours = [
 ]
 
 for i in range(0, len(colours)):
+    print("{0:2} {1}".format(i, colours[i]))
     blinkt.set_all(colours[i][0], colours[i][1], colours[i][2])
     blinkt.show()
     time.sleep(1)
