@@ -15,12 +15,13 @@ fourletterphat.show()
 
 colours = [
     [255, 255, 255],    # white
-    [255, 255, 0],      # yellow
     [255, 0, 0],        # red
+    [255, 127, 0],      # orange
+    [255, 255, 0],      # yellow
     [0, 255, 0],        # green
     [0, 0, 255],        # blue
-    [255, 0, 127],      # fuscia
     [0, 255, 255],      # sky blue?
+    [255, 0, 127],      # fuscia
 ]
 
 for i in range(0, len(colours)):
