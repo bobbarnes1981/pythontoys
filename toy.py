@@ -30,34 +30,37 @@ for i in range(0, len(colours)):
     blinkt.show()
     time.sleep(1)
 
-def show_flp():
+def show_flp(unix_time):
     fourletterphat.clear()
-    str_time = time.strftime("%H%M")
-    fourletterphat.print_number_str(str_time)
-    fourletterphat.set_decimal(1, int(time.time() % 2))
+    time_string = time.strftime("%H%M", time.localtime(unix_time))
+    fourletterphat.print_number_str(time_string)
+    fourletterphat.set_decimal(1, int(unix_time % 2))
     fourletterphat.show()
 
-def show_blinkt():
-    t = time.time()
-    l = time.localtime(t)
+def show_binary(num, r, g, b):
+    n = int(num) & 0xFF
+    bit = 0x01
+    for i in range(0, 8):
+        if n & bit > 0:
+            blinkt.set_pixel(7 - i, r, g, b)
+        else:
+            blinkt.set_pixel(7 - i, 0, 0, 0)
+        bit = bit << 1
+    blinkt.show()
+
+def show_blinkt(unix_time):
+    l = time.localtime(unix_time)
+    # only enable blinkt between 08:00 and 21:00
     if l.tm_hour > 7 and l.tm_hour < 21:
-        t = int(t) & 0xFF
-        b = 0x01
-        # pick a colour
         colour = colours[l.tm_min % len(colours)]
-        for i in range(0, 8):
-            if t & b > 0:
-                blinkt.set_pixel(7 - i, colour[0], colour[1], colour[2])
-            else:
-                blinkt.set_pixel(7 - i, 0, 0, 0)
-            b = b << 1
-        blinkt.show()
+        show_binary(unix_time, colour[0], colour[1], colour[2])
     else:
         blinkt.set_all(0, 0, 0)
         blinkt.show()
 
 while True:
-    show_flp()
-    show_blinkt()
+    unix_time = time.time()
+    show_flp(unix_time)
+    show_blinkt(unix_time)
     time.sleep(0.1)
 
